@@ -9,9 +9,10 @@ import (
 
 //EMV -
 type EMV interface {
-	GetEMV() tags
+	GetEMV() Tags
 	RemoveTag(name string)
 	ToBerTLV() string
+	Parse(payload string)
 	//GeneratePayload() string
 }
 
@@ -21,20 +22,20 @@ type Builder interface {
 	Build() EMV
 }
 
-// tags -
-type tags struct {
+// Tags -
+type Tags struct {
 	items map[string]tag
 }
 
 // NewEMV -
 func NewEMV() Builder {
-	return &tags{
+	return &Tags{
 		items: map[string]tag{},
 	}
 }
 
 //AddTag -
-func (t *tags) AddTag(name, value string) Builder {
+func (t *Tags) AddTag(name, value string) Builder {
 	builder := New()
 	data := builder.
 		SetTag(name, value).
@@ -43,21 +44,23 @@ func (t *tags) AddTag(name, value string) Builder {
 	t.items[data.GetName()] = tag{
 		name:  data.GetName(),
 		value: data.GetValue(),
+		size:  len(data.GetValue()),
 	}
 	return t
 }
 
-//AddTag -
-func (t *tags) RemoveTag(name string) {
+//RemoveTag -
+func (t *Tags) RemoveTag(name string) {
 	delete(t.items, name)
 }
 
-//GetEMV
-func (t *tags) GetEMV() tags {
+//GetEMV -
+func (t *Tags) GetEMV() Tags {
 	return *t
 }
 
-func (t *tags) ToBerTLV() string {
+//ToBerTLV -
+func (t *Tags) ToBerTLV() string {
 	s := ""
 	if len(t.items) > 0 {
 		for _, t := range t.items {
@@ -69,8 +72,8 @@ func (t *tags) ToBerTLV() string {
 }
 
 //Build -
-func (t *tags) Build() EMV {
-	return &tags{
+func (t *Tags) Build() EMV {
+	return &Tags{
 		items: t.items,
 	}
 }
@@ -81,6 +84,7 @@ func (t *tags) Build() EMV {
 type Data interface {
 	GetName() string
 	GetValue() string
+	GetSize() int
 }
 
 //Tag -
@@ -90,6 +94,7 @@ type tag struct {
 	value       string
 	source      string
 	format      string
+	size        int
 	minSize     int
 	maxSize     int
 }
@@ -107,6 +112,11 @@ func (t *tag) GetName() string {
 //GetValue - return value data from tag object
 func (t *tag) GetValue() string {
 	return t.value
+}
+
+//GetSize - return size of value data from tag object
+func (t *tag) GetSize() int {
+	return len(t.value)
 }
 
 //Format TLV
