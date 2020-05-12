@@ -1,4 +1,4 @@
-package emv
+package draf
 
 import (
 	"encoding/hex"
@@ -28,57 +28,15 @@ const (
 
 //EMV -
 type EMV interface {
-	GetEMV() tags
+	GetName() string
+	GetValue() string
+	AddTag()
 	//GeneratePayload() string
 }
 
-//Builder -
-type Builder interface {
-	AddTag(t tag) Builder
-	RemoveTag(t tag) Builder
-	Build() EMV
-}
-
-// tags -
-type tags struct {
-	list []tag
-}
-
-// NewEMV -
-func NewEMV() Builder {
-	return &tags{}
-}
-
-//AddTag -
-func (l *tags) AddTag(t tag) Builder {
-	l.list = append(l.list, t)
-	return l
-}
-
-//AddTag -
-func (l *tags) RemoveTag(t tag) Builder {
-	//l.list = delete(t)
-	return l
-}
-
-//GetEMV
-func (l *tags) GetEMV() tags {
-	return *l
-}
-
-//Build -
-func (l *tags) Build() EMV {
-	return &tags{
-		list: l,
-	}
-}
-
-//TAG
-
-//Data -
-type Data interface {
-	GetName() string
-	GetValue() string
+// TAGS -
+type TAGS struct {
+	Tags []tag
 }
 
 //Tag -
@@ -96,7 +54,7 @@ type tag struct {
 type TagBuilder interface {
 	SetName(string) TagBuilder
 	SetValue(string) TagBuilder
-	BuildTag() Data
+	Build() EMV
 }
 
 //SetName -
@@ -112,7 +70,7 @@ func (t *tag) SetValue(value string) TagBuilder {
 }
 
 //Build -
-func (t *tag) BuildTag() Data {
+func (t *tag) Build() EMV {
 	return &tag{
 		name:  t.name,
 		value: t.value,
