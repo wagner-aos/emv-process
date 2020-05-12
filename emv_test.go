@@ -58,3 +58,43 @@ func TestEMVTag(t *testing.T) {
 	})
 
 }
+
+func TestEMVParser(t *testing.T) {
+
+	Convey("Should build a emv tag list and generate BERTLV", t, func() {
+
+		emv := NewEMV().
+			AddTag("82", "5800").
+			AddTag("84", "A0000000041010").
+			AddTag("95", "4200008000").
+			AddTag("9F26", "54BD15AE210A5117").
+			AddTag("9F27", "80").
+			AddTag("9F10", "0210A50002020000000000000000000000FF").
+			AddTag("9F36", "00F6").
+			AddTag("9F37", "B576D113").
+			AddTag("9A", "190322").
+			AddTag("9C", "00").
+			AddTag("9F02", "000000025800").
+			AddTag("9F03", "000000000000").
+			AddTag("5F2A", "0986").
+			AddTag("9F1A", "0076").
+			AddTag("9F35", "22").
+			AddTag("9F34", "410302").
+			AddTag("5F24", "220531").
+			AddTag("9F33", "E0F0C8").
+			AddTag("5F28", "0076").
+			// AddTag("5F20", "WAGNER ALVES").
+			// AddTag("9F0B", "WAGNER ALVES DE OLIVEIRA SILVA").
+			Build()
+
+		for _, t := range emv.GetEMV().items {
+			convey.Printf("\n\tTAG: %s: %s", t.GetName(), t.GetValue())
+		}
+
+		berTlv := emv.ToBerTLV()
+		convey.Printf("\n\tBERTLV: %s", berTlv)
+
+		//So(len(emv.GetEMV().items), ShouldEqual, 21)
+
+	})
+}

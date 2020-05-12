@@ -7,29 +7,11 @@ import (
 	"unicode/utf8"
 )
 
-// const ...
-const (
-	TagApplicationDefinitionFileName = "4F"
-	TagApplicationLabel              = "50"
-	TagTrack2EquivalentData          = "57"
-	TagApplicationPAN                = "5A"
-	TagCardholderName                = "5F20"
-	TagLanguagePreference            = "5F2D"
-	TagIssuerURL                     = "5F50"
-	TagApplicationVersionNumber      = "9F08"
-	TagIssuerApplicationData         = "9F10"
-	TagTokenRequestorID              = "9F19"
-	TagPaymentAccountReference       = "9F24"
-	TagLast4DigitsOfPAN              = "9F25"
-	TagApplicationCryptogram         = "9F26"
-	TagApplicationTransactionCounter = "9F36"
-	TagUnpredictableNumber           = "9F37"
-)
-
 //EMV -
 type EMV interface {
 	GetEMV() tags
 	RemoveTag(name string)
+	ToBerTLV() string
 	//GeneratePayload() string
 }
 
@@ -59,6 +41,7 @@ func (t *tags) AddTag(name, value string) Builder {
 		BuildTag()
 
 	t.items[data.GetName()] = tag{
+		name:  data.GetName(),
 		value: data.GetValue(),
 	}
 	return t
@@ -72,6 +55,17 @@ func (t *tags) RemoveTag(name string) {
 //GetEMV
 func (t *tags) GetEMV() tags {
 	return *t
+}
+
+func (t *tags) ToBerTLV() string {
+	s := ""
+	if len(t.items) > 0 {
+		for _, t := range t.items {
+			//s += format(t.name, toHex(t.value))
+			s += format(t.name, t.value)
+		}
+	}
+	return s
 }
 
 //Build -
@@ -105,11 +99,6 @@ func New() TagBuilder {
 	return &tag{}
 }
 
-//SetValue -
-func (t *tag) AddTag() {
-
-}
-
 //GetName - return name data from tag object
 func (t *tag) GetName() string {
 	return t.name
@@ -119,45 +108,6 @@ func (t *tag) GetName() string {
 func (t *tag) GetValue() string {
 	return t.value
 }
-
-// // BERTLV ...
-// type BERTLV struct {
-// 	DataApplicationDefinitionFileName Tag // "4F"
-// 	DataApplicationLabel              Tag // "50"
-// 	DataTrack2EquivalentData          Tag // "57"
-// 	DataApplicationPAN                Tag // "5A"
-// 	DataCardholderName                Tag // "5F20"
-// 	DataLanguagePreference            Tag // "5F2D"
-// 	DataIssuerURL                     Tag // "5F50"
-// 	DataApplicationVersionNumber      Tag // "9F08"
-// 	DataIssuerApplicationData         Tag // "9F10"
-// 	DataTokenRequestorID              Tag // "9F19"
-// 	DataPaymentAccountReference       Tag // "9F24"
-// 	DataLast4DigitsOfPAN              Tag // "9F25"
-// 	DataApplicationCryptogram         Tag // "9F26"
-// 	DataApplicationTransactionCounter Tag // "9F36"
-// 	DataUnpredictableNumber           Tag // "9F37"
-// }
-
-// GeneratePayload ...
-//func (e *TAGS) GeneratePayload() (string, error) {
-//s := ""
-
-// if len(c.CommonDataTemplates) > 0 {
-// 	for _, t := range c.CommonDataTemplates {
-// 		template := formattingTemplate(t.BERTLV)
-// 		s += template
-// 	}
-// }
-
-// decoded, err := hex.DecodeString(s)
-// if err != nil {
-// 	return "", err
-// }
-// s = base64.StdEncoding.EncodeToString([]byte(string(decoded)))
-//return s, nil
-//return string(decoded), nil
-//}
 
 //Format TLV
 func format(id, value string) string {
