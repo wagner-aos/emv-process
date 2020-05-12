@@ -29,47 +29,55 @@ const (
 //EMV -
 type EMV interface {
 	GetEMV() tags
+	RemoveTag(name string)
 	//GeneratePayload() string
 }
 
 //Builder -
 type Builder interface {
-	AddTag(t tag) Builder
-	RemoveTag(t tag) Builder
+	AddTag(name, value string) Builder
 	Build() EMV
 }
 
 // tags -
 type tags struct {
-	list []tag
+	items map[string]tag
 }
 
 // NewEMV -
 func NewEMV() Builder {
-	return &tags{}
+	return &tags{
+		items: map[string]tag{},
+	}
 }
 
 //AddTag -
-func (l *tags) AddTag(t tag) Builder {
-	l.list = append(l.list, t)
-	return l
+func (t *tags) AddTag(name, value string) Builder {
+	builder := New()
+	data := builder.
+		SetTag(name, value).
+		BuildTag()
+
+	t.items[data.GetName()] = tag{
+		value: data.GetValue(),
+	}
+	return t
 }
 
 //AddTag -
-func (l *tags) RemoveTag(t tag) Builder {
-	//l.list = delete(t)
-	return l
+func (t *tags) RemoveTag(name string) {
+	delete(t.items, name)
 }
 
 //GetEMV
-func (l *tags) GetEMV() tags {
-	return *l
+func (t *tags) GetEMV() tags {
+	return *t
 }
 
 //Build -
-func (l *tags) Build() EMV {
+func (t *tags) Build() EMV {
 	return &tags{
-		list: l,
+		items: t.items,
 	}
 }
 
@@ -90,33 +98,6 @@ type tag struct {
 	format      string
 	minSize     int
 	maxSize     int
-}
-
-//TagBuilder -
-type TagBuilder interface {
-	SetName(string) TagBuilder
-	SetValue(string) TagBuilder
-	BuildTag() Data
-}
-
-//SetName -
-func (t *tag) SetName(name string) TagBuilder {
-	t.name = name
-	return t
-}
-
-//SetValue -
-func (t *tag) SetValue(value string) TagBuilder {
-	t.value = value
-	return t
-}
-
-//Build -
-func (t *tag) BuildTag() Data {
-	return &tag{
-		name:  t.name,
-		value: t.value,
-	}
 }
 
 // New -
@@ -159,24 +140,24 @@ func (t *tag) GetValue() string {
 // }
 
 // GeneratePayload ...
-func (e *TAGS) GeneratePayload() (string, error) {
-	s := ""
+//func (e *TAGS) GeneratePayload() (string, error) {
+//s := ""
 
-	// if len(c.CommonDataTemplates) > 0 {
-	// 	for _, t := range c.CommonDataTemplates {
-	// 		template := formattingTemplate(t.BERTLV)
-	// 		s += template
-	// 	}
-	// }
+// if len(c.CommonDataTemplates) > 0 {
+// 	for _, t := range c.CommonDataTemplates {
+// 		template := formattingTemplate(t.BERTLV)
+// 		s += template
+// 	}
+// }
 
-	// decoded, err := hex.DecodeString(s)
-	// if err != nil {
-	// 	return "", err
-	// }
-	// s = base64.StdEncoding.EncodeToString([]byte(string(decoded)))
-	return s, nil
-	//return string(decoded), nil
-}
+// decoded, err := hex.DecodeString(s)
+// if err != nil {
+// 	return "", err
+// }
+// s = base64.StdEncoding.EncodeToString([]byte(string(decoded)))
+//return s, nil
+//return string(decoded), nil
+//}
 
 //Format TLV
 func format(id, value string) string {
