@@ -34,11 +34,23 @@ With this lib you can Encode and Decode EMV tags for handling in your code.
 ```
 
 
-* Encode TLV string:
+* Emv Struc to TLV string:
 
 ```go
     
     tlv := emv.ToTLV()
+
+```
+
+* TLV string to Struct:
+
+```go
+
+    payload := "9F260854BD15AE210A51179F2701809F10180210A50002020000000000000000000000FF"
+
+    emv := NewEMV().Build()
+	emv.Parse(payload)
+ 
 
 ```
 
