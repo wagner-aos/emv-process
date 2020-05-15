@@ -2,8 +2,6 @@ package emv
 
 import (
 	"fmt"
-
-	"github.com/kataras/golog"
 )
 
 // const ...
@@ -46,7 +44,7 @@ var tagMap = map[string]tag{}
 
 func init() {
 	loadTags()
-	validateTagMap()
+	validateTagNameMap()
 }
 
 //load Emv tags available
@@ -85,12 +83,14 @@ func loadTags() {
 	tagMap[TagUnpredictableNumber] = tag{name: TagUnpredictableNumber, minSize: 0, maxSize: 0}
 }
 
-func validateTagMap() {
+func validateTagNameMap() bool {
 	for k, v := range tagMap {
+		fmt.Printf("\n\tTagName: %s", v.GetName())
 		if k != v.GetName() {
 			err := fmt.Errorf("Tag Map key: %s is not equal a tag name: %s", k, v.GetName())
-			golog.Fatalf("[emv]:%s", err)
-			return
+			fmt.Errorf("[emv]:%s", err)
+			return false
 		}
 	}
+	return true
 }
