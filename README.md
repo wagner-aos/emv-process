@@ -4,7 +4,7 @@ Emv Encode and Decode library based on builder pattern
 
 | Date | Author | Comments | Version |
 | --- | --- | --- | --- |
-| 10/05/2020 | Wagner aka Barão | This is the Beginning of success | 0.0.1 |
+| 10/05/2020 | Wagner aka Barão | This is the Beginning of success | 0.0.3 |
 
 ### What is EMV?
 
@@ -16,7 +16,14 @@ With this lib you can Encode and Decode EMV tags for handling in your code.
 
 ### How to use in you code:
 
-* import:
+* Get from repository
+
+```sh
+    go get -v "github.com/wagner-aos/emv-process"
+```
+
+
+* import in your go file:
 
 ```go
 
@@ -27,7 +34,7 @@ With this lib you can Encode and Decode EMV tags for handling in your code.
 
 ```go
 
-    emv := NewEMV().
+    emvStruct := emv.NewEMV().
             AddTag("5F20", "WAGNER ALVES").
             AddTag("9F0B", "WAGNER ALVES DE OLIVEIRA SILVA").
             Build()
@@ -38,7 +45,7 @@ With this lib you can Encode and Decode EMV tags for handling in your code.
 
 ```go
     
-    tlv := emv.ToTLV()
+    tlv := emvStruct.ToTLV()
 
 ```
 
@@ -48,8 +55,8 @@ With this lib you can Encode and Decode EMV tags for handling in your code.
 
     payload := "9F260854BD15AE210A51179F2701809F10180210A50002020000000000000000000000FF"
 
-    emv := NewEMV().Build()
-	emv.Parse(payload)
+    emvStruct := emv.NewEMV().Build()
+	emvStruct.Parse(payload)
  
 
 ```
@@ -58,7 +65,7 @@ With this lib you can Encode and Decode EMV tags for handling in your code.
 
 ```go
 
-    tagName, tagValue, tagSize, err := emv.GetTag("5F20")
+    tagName, tagValue, tagSize, err := emvStruct.GetTag("5F20")
 
 ``` 
 
