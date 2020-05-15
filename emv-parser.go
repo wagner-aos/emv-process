@@ -1,49 +1,50 @@
 package emv
 
 import (
+	"fmt"
 	"strconv"
 	"strings"
-
-	"github.com/kataras/golog"
 )
 
 //Parse -
 func (t *Tags) Parse(payload string) {
-	///tags := map[string]tag{}
 	offset := 0
-	tagFound, tagExists := hasTagOnPayloadStart(payload, offset)
+	for {
+		tagFound, tagExists := hasTagOnPayload(payload, offset)
 
-	if tagExists {
-		//tag := tagMap[tagName]
-		offset = len(tagFound.name) + tagFound.size
-		golog.Infof("%s", tagFound.name)
-		golog.Infof("%d", offset)
+		if tagExists {
+			offset += len(tagFound.name) + 2 + tagFound.size*2
+			fmt.Printf("\n\tTag Name: %s", tagFound.name)
+			fmt.Printf("\n\tTag Value: %s", tagFound.value)
+			fmt.Printf("\n\tTag Size: %d", tagFound.size)
 
-		t.items[tagFound.name] = *tagFound
+			fmt.Printf("\n\n\tOffset: %d", offset)
+
+			t.items[tagFound.name] = *tagFound
+		} else {
+			return
+		}
 	}
 }
 
-func hasTagOnPayloadStart(payload string, offset int) (*tag, bool) {
-	tagFound := &tag{}
-	tagSize := 0
+func hasTagOnPayload(payload string, offset int) (*tag, bool) {
+
 	for tagName := range tagMap {
-		if strings.HasPrefix(payload[offset:], tagName) {
-			tagSize, _ = strconv.Atoi(payload[len(tagName) : len(tagName)+2])
-			tagValue := payload[len(tagName)+tagSize : len(tagName)+tagSize+tagSize]
-			tagFound = &tag{
+		payloadPosition := payload[offset:]
+
+		if strings.HasPrefix(payloadPosition, tagName) {
+			tagSize, _ := strconv.ParseInt(payloadPosition[len(tagName):len(tagName)+2], 16, 64)
+			//tagHexSize, _ := strconv.Atoi(payloadPosition[len(tagName) : len(tagName)+2])
+			//tagSize := str
+			tagValue := payloadPosition[len(tagName)+2 : len(tagName)+2+int(tagSize)*2]
+			tagFound := &tag{
 				name:  tagName,
 				value: tagValue,
-				size:  tagSize,
+				size:  int(tagSize),
 			}
 
-			golog.Debugf("Tag: %s Value: %s- size: %d not found on tags available", tagFound.GetName(), tagFound.GetValue(), tagFound.GetSize())
 			return tagFound, true
 		}
 	}
-	golog.Error("Tag not found on tags available")
-	return tagFound, false
+	return &tag{}, false
 }
-
-// func extractTag(payload, stag string) *tag {
-
-// }

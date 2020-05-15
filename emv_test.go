@@ -91,8 +91,8 @@ func TestEMVParser(t *testing.T) {
 			convey.Printf("\n\tTAG: %s: %s", t.GetName(), t.GetValue())
 		}
 
-		berTlv := emv.ToTLV()
-		convey.Printf("\n\tTLV: %s", berTlv)
+		tlv := emv.ToTLV()
+		convey.Printf("\n\tTLV: %s", tlv)
 
 		//So(len(emv.GetEMV().items), ShouldEqual, 21)
 

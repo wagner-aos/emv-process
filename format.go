@@ -13,6 +13,10 @@ func format(id, value string) string {
 	lengthStr := strconv.Itoa(length)
 	lengthStr = "00" + fmt.Sprintf("%X", length)
 	return id + lengthStr[len(lengthStr)-2:] + value
+	// if len(lengthStr) < 2 {
+	// 	return id + "0" + lengthStr + value
+	// }
+	// return id + lengthStr + value
 }
 
 func toHex(s string) string {

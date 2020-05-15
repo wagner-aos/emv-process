@@ -29,7 +29,6 @@ func (t *Tags) ToTLV() string {
 	s := ""
 	if len(t.items) > 0 {
 		for _, t := range t.items {
-			//s += format(t.name, toHex(t.value))
 			s += formatting(t)
 		}
 	}
