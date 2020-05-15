@@ -34,7 +34,7 @@ With this lib you can Encode and Decode EMV tags for handling in your code.
 ```
 
 
-* Emv Struct to TLV string:
+* EMV Struct to TLV string:
 
 ```go
     
