@@ -92,4 +92,10 @@ With this lib you can Encode and Decode EMV tags for handling in your code.
     git push origin v0.0.3
 ```
 
+* 3- Now the new version can be dowloaded to the other projects
+
+```sh
+    go get -v "github.com/wagner-aos/emv-process"
+```
+
 
