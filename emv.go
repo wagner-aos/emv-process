@@ -1,8 +1,11 @@
 package emv
 
+import "fmt"
+
 //EMV -
 type EMV interface {
 	GetEMV() Tags
+	GetTag(name string) (string, string, int, error)
 	RemoveTag(name string)
 	ToTLV() string
 	Parse(payload string)
@@ -17,6 +20,16 @@ type Tags struct {
 //GetEMV -
 func (t *Tags) GetEMV() Tags {
 	return *t
+}
+
+//GetTag - it returs tag name, value, size and error
+func (t *Tags) GetTag(name string) (string, string, int, error) {
+	tag := t.items[name]
+	if tag.name == "" {
+		err := fmt.Errorf("[emv] error - tag: %s not found", name)
+		return "", "", 0, err
+	}
+	return tag.name, tag.value, tag.size, nil
 }
 
 //RemoveTag -

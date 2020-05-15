@@ -7,7 +7,7 @@ import (
 	. "github.com/smartystreets/goconvey/convey"
 )
 
-func TestEMVTag(t *testing.T) {
+func TestEMV(t *testing.T) {
 
 	Convey("Given a Tag and EMV Builder", t, func() {
 
@@ -52,6 +52,45 @@ func TestEMVTag(t *testing.T) {
 			}
 
 			So(len(emv.GetEMV().items), ShouldEqual, 1)
+
+		})
+
+		Convey("Should build a emv tag list and get a tag by name", func() {
+
+			emv := NewEMV().
+				AddTag("5F20", "WAGNER ALVES").
+				AddTag("9F0B", "WAGNER ALVES DE OLIVEIRA SILVA").
+				Build()
+
+			tagName, tagValue, tagSize, err := emv.GetTag("5F20")
+			convey.Printf("\n\tTag Name: %s", tagName)
+			convey.Printf("\n\tTag Value: %s", tagValue)
+			convey.Printf("\n\tTag Size: %d", tagSize)
+
+			So(tagName, ShouldEqual, "5F20")
+			So(tagValue, ShouldEqual, "WAGNER ALVES")
+			So(tagSize, ShouldEqual, 12)
+			So(err, ShouldBeNil)
+
+			So(len(emv.GetEMV().items), ShouldEqual, 2)
+
+		})
+
+		Convey("Should return an error if a tag not exists", func() {
+
+			emv := NewEMV().
+				AddTag("5F20", "WAGNER ALVES").
+				AddTag("9F0B", "WAGNER ALVES DE OLIVEIRA SILVA").
+				Build()
+
+			tagName, tagValue, tagSize, err := emv.GetTag("XXXX")
+
+			So(tagName, ShouldBeEmpty)
+			So(tagValue, ShouldBeEmpty)
+			So(tagSize, ShouldEqual, 0)
+			So(err, ShouldBeError)
+
+			So(len(emv.GetEMV().items), ShouldEqual, 2)
 
 		})
 

@@ -54,6 +54,14 @@ With this lib you can Encode and Decode EMV tags for handling in your code.
 
 ```
 
+* Get a tag values by tag name:
+
+```go
+
+    tagName, tagValue, tagSize, err := emv.GetTag("5F20")
+
+``` 
+
 * More examples you can see in test go files!
 
 

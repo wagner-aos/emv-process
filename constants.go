@@ -88,7 +88,7 @@ func validateTagNameMap() bool {
 		fmt.Printf("\n\tTagName: %s", v.GetName())
 		if k != v.GetName() {
 			err := fmt.Errorf("Tag Map key: %s is not equal a tag name: %s", k, v.GetName())
-			fmt.Errorf("[emv]:%s", err)
+			fmt.Printf("[emv]:%s", err)
 			return false
 		}
 	}
