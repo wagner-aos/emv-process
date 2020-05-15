@@ -77,3 +77,19 @@ With this lib you can Encode and Decode EMV tags for handling in your code.
 * Validate tag field size in builder
 * Validate tag field size in tlv
 
+
+## Useful commands:
+
+###  Creating a version of this lib:
+
+* 1- Create a git tag with the version number
+```sh
+    git tag -a v0.0.3 -m "my version 0.0.3"
+```
+
+* 2- Push the tag to git repo
+```sh
+    git push origin v0.0.3
+```
+
+
