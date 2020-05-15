@@ -9,7 +9,7 @@ import (
 
 //Parse -
 func (t *Tags) Parse(payload string) {
-	tags := map[string]tag{}
+	///tags := map[string]tag{}
 	offset := 0
 	tagFound, tagExists := hasTagOnPayloadStart(payload, offset)
 
@@ -18,10 +18,9 @@ func (t *Tags) Parse(payload string) {
 		offset = len(tagFound.name) + tagFound.size
 		golog.Infof("%s", tagFound.name)
 		golog.Infof("%d", offset)
+
+		t.items[tagFound.name] = *tagFound
 	}
-
-	t.items = tags
-
 }
 
 func hasTagOnPayloadStart(payload string, offset int) (*tag, bool) {

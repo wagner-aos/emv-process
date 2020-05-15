@@ -61,7 +61,7 @@ func TestEMVTag(t *testing.T) {
 
 func TestEMVParser(t *testing.T) {
 
-	Convey("Should build a emv tag list and generate BERTLV", t, func() {
+	Convey("Should build a emv tag list and generate TLV", t, func() {
 
 		emv := NewEMV().
 			AddTag("82", "5800").
@@ -91,8 +91,8 @@ func TestEMVParser(t *testing.T) {
 			convey.Printf("\n\tTAG: %s: %s", t.GetName(), t.GetValue())
 		}
 
-		berTlv := emv.ToBerTLV()
-		convey.Printf("\n\tBERTLV: %s", berTlv)
+		berTlv := emv.ToTLV()
+		convey.Printf("\n\tTLV: %s", berTlv)
 
 		//So(len(emv.GetEMV().items), ShouldEqual, 21)
 
