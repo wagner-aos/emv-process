@@ -57,4 +57,8 @@ With this lib you can Encode and Decode EMV tags for handling in your code.
 * More examples you can see in test go files!
 
 
+## TODO List
+
+* Validate tag field size in builder
+* Validate tag field size in tlv
 
