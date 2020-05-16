@@ -4,40 +4,49 @@ import (
 	"fmt"
 )
 
-// const ...
+// const emv tag names
 const (
-	TagApplicationDefinitionFileName = "4F"
-	TagApplicationLabel              = "50"
-	TagTrack2EquivalentData          = "57"
-	TagApplicationPAN                = "5A"
-	TagApplicationInterchangeProfile = "82"
-	TagDedicatedFileName             = "84"
-	TagTerminalVerificationResults   = "95"
-	TagTransactionDate               = "9A"
-	TagTransactionStatusInformation  = "9B"
-	TagTransactionType               = "9C"
-	TagCardholderName                = "5F20"
-	TagApplicationExpirationDate     = "5F24"
-	TagIssuerCountryCode             = "5F28"
-	TagTransactionCurrencyCode       = "5F2A"
-	TagLanguagePreference            = "5F2D"
-	TagPANSequenceNumber             = "5F34"
-	TagIssuerURL                     = "5F50"
-	TagAuthorisedAmount              = "9F02"
-	TagAmountOther                   = "9F03"
-	TagApplicationVersionNumber      = "9F08"
-	TagIssuerApplicationData         = "9F10"
-	TagTokenRequestorID              = "9F19"
-	TagTerminalCountryCode           = "9F1A"
-	TagPaymentAccountReference       = "9F24"
-	TagLast4DigitsOfPAN              = "9F25"
-	TagApplicationCryptogram         = "9F26"
-	TagCryptogramInformationData     = "9F27"
-	TagTerminalCapabilities          = "9F33"
-	TagCardholderVerificationMethod  = "9F34"
-	TagTerminalType                  = "9F35"
-	TagApplicationTransactionCounter = "9F36"
-	TagUnpredictableNumber           = "9F37"
+	TagApplicationDefinitionFileName    = "4F"
+	TagApplicationLabel                 = "50"
+	TagTrack2EquivalentData             = "57"
+	TagApplicationPAN                   = "5A"
+	TagIssuerScriptData1                = "71"
+	TagIssuerScriptData2                = "72"
+	TagApplicationInterchangeProfile    = "82"
+	TagDedicatedFileName                = "84"
+	TagIssuerAuthenticationData         = "91"
+	TagTerminalVerificationResults      = "95"
+	TagTransactionDate                  = "9A"
+	TagTransactionStatusInformation     = "9B"
+	TagTransactionType                  = "9C"
+	TagCardholderName                   = "5F20"
+	TagApplicationExpirationDate        = "5F24"
+	TagIssuerCountryCode                = "5F28"
+	TagTransactionCurrencyCode          = "5F2A"
+	TagLanguagePreference               = "5F2D"
+	TagPANSequenceNumber                = "5F34"
+	TagIssuerURL                        = "5F50"
+	TagAuthorisedAmount                 = "9F02"
+	TagAmountOther                      = "9F03"
+	TagApplicationIdentifier            = "9F06"
+	TagApplicationUsageControl          = "9F07"
+	TagApplicationVersionNumber         = "9F08"
+	TagTerminalApplicationVersionNumber = "9F09"
+	TagIssuerApplicationData            = "9F10"
+	TagTokenRequestorID                 = "9F19"
+	TagTerminalCountryCode              = "9F1A"
+	TagInterfaceDeviceSerialNumber      = "9F1E"
+	TagPaymentAccountReference          = "9F24"
+	TagLast4DigitsOfPAN                 = "9F25"
+	TagApplicationCryptogram            = "9F26"
+	TagCryptogramInformationData        = "9F27"
+	TagTerminalCapabilities             = "9F33"
+	TagCardholderVerificationMethod     = "9F34"
+	TagTerminalType                     = "9F35"
+	TagApplicationTransactionCounter    = "9F36"
+	TagUnpredictableNumber              = "9F37"
+	TagTransactionSequenceCounter       = "9F41"
+	TagIssuerScriptResults              = "9F5B"
 )
 
 var tagMap = map[string]tag{}
@@ -53,8 +62,11 @@ func loadTags() {
 	tagMap[TagApplicationLabel] = tag{name: TagApplicationLabel, minSize: 0, maxSize: 0}
 	tagMap[TagTrack2EquivalentData] = tag{name: TagTrack2EquivalentData, minSize: 0, maxSize: 0}
 	tagMap[TagApplicationPAN] = tag{name: TagApplicationPAN, minSize: 0, maxSize: 0}
+	tagMap[TagIssuerScriptData1] = tag{name: TagIssuerScriptData1, minSize: 0, maxSize: 0}
+	tagMap[TagIssuerScriptData2] = tag{name: TagIssuerScriptData2, minSize: 0, maxSize: 0}
 	tagMap[TagApplicationInterchangeProfile] = tag{name: TagApplicationInterchangeProfile, minSize: 0, maxSize: 0}
 	tagMap[TagDedicatedFileName] = tag{name: TagDedicatedFileName, minSize: 0, maxSize: 0}
+	tagMap[TagIssuerAuthenticationData] = tag{name: TagIssuerAuthenticationData, minSize: 0, maxSize: 0}
 	tagMap[TagTerminalVerificationResults] = tag{name: TagTerminalVerificationResults, minSize: 0, maxSize: 0}
 	tagMap[TagTransactionDate] = tag{name: TagTransactionDate, minSize: 0, maxSize: 0}
 	tagMap[TagTransactionStatusInformation] = tag{name: TagTransactionStatusInformation, minSize: 0, maxSize: 0}
@@ -68,10 +80,14 @@ func loadTags() {
 	tagMap[TagIssuerURL] = tag{name: TagIssuerURL, minSize: 0, maxSize: 0}
 	tagMap[TagAuthorisedAmount] = tag{name: TagAuthorisedAmount, minSize: 0, maxSize: 0}
 	tagMap[TagAmountOther] = tag{name: TagAmountOther, minSize: 0, maxSize: 0}
+	tagMap[TagApplicationIdentifier] = tag{name: TagApplicationIdentifier, minSize: 0, maxSize: 0}
+	tagMap[TagApplicationUsageControl] = tag{name: TagApplicationUsageControl, minSize: 0, maxSize: 0}
 	tagMap[TagApplicationVersionNumber] = tag{name: TagApplicationVersionNumber, minSize: 0, maxSize: 0}
+	tagMap[TagTerminalApplicationVersionNumber] = tag{name: TagTerminalApplicationVersionNumber, minSize: 0, maxSize: 0}
 	tagMap[TagIssuerApplicationData] = tag{name: TagIssuerApplicationData, minSize: 0, maxSize: 0}
 	tagMap[TagTokenRequestorID] = tag{name: TagTokenRequestorID, minSize: 0, maxSize: 0}
 	tagMap[TagTerminalCountryCode] = tag{name: TagTerminalCountryCode, minSize: 0, maxSize: 0}
+	tagMap[TagInterfaceDeviceSerialNumber] = tag{name: TagInterfaceDeviceSerialNumber, minSize: 0, maxSize: 0}
 	tagMap[TagPaymentAccountReference] = tag{name: TagPaymentAccountReference, minSize: 0, maxSize: 0}
 	tagMap[TagLast4DigitsOfPAN] = tag{name: TagLast4DigitsOfPAN, minSize: 0, maxSize: 0}
 	tagMap[TagApplicationCryptogram] = tag{name: TagApplicationCryptogram, minSize: 0, maxSize: 0}
@@ -81,6 +97,8 @@ func loadTags() {
 	tagMap[TagTerminalType] = tag{name: TagTerminalType, minSize: 0, maxSize: 0}
 	tagMap[TagApplicationTransactionCounter] = tag{name: TagApplicationTransactionCounter, minSize: 0, maxSize: 0}
 	tagMap[TagUnpredictableNumber] = tag{name: TagUnpredictableNumber, minSize: 0, maxSize: 0}
+	tagMap[TagTransactionSequenceCounter] = tag{name: TagTransactionSequenceCounter, minSize: 0, maxSize: 0}
+	tagMap[TagIssuerScriptResults] = tag{name: TagIssuerScriptResults, minSize: 0, maxSize: 0}
 }
 
 func validateTagNameMap() bool {
