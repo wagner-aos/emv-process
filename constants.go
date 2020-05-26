@@ -103,7 +103,7 @@ func loadTags() {
 
 func validateTagNameMap() bool {
 	for k, v := range tagMap {
-		fmt.Printf("\n\tTagName: %s", v.GetName())
+		//fmt.Printf("\n\tTagName: %s", v.GetName())
 		if k != v.GetName() {
 			err := fmt.Errorf("Tag Map key: %s is not equal a tag name: %s", k, v.GetName())
 			fmt.Printf("[emv]:%s", err)
