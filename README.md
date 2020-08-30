@@ -4,7 +4,7 @@ Emv Encode and Decode library based on builder pattern
 
 | Date | Author | Comments | Version |
 | --- | --- | --- | --- |
-| 10/05/2020 | Wagner aka Barão | This is the Beginning of success | 0.0.3 |
+| 10/05/2020 | Wagner aka Barão | This is the Beginning of success | 0.0.4 |
 
 ### What is EMV?
 
@@ -84,28 +84,27 @@ With this lib you can Encode and Decode EMV tags for handling in your code.
 
 ## Adding new EMV Tags to the project
 
-1. in the file **constants.go**
+1- in the file **constants.go** put a new constant.
 
-Put a new constant
 ```javascript
-    TagCardholderName = "5F20"
+TagCardholderName = "5F20"
 ```
 
 Insert in **loadTags()** methods
 ```javascript
-    //load Emv tags available
-    func loadTags() {
-        tagMap[TagCardholderName] = tag{name: TagCardholderName, minSize: 0, maxSize: 0}
+//load Emv tags available
+func loadTags() {
+    tagMap[TagCardholderName] = tag{name: TagCardholderName, minSize: 0, maxSize: 0}
 
-    }    
+}    
 ```
 
-2. in the file **format.go** insert the conditional
+2- in the file **format.go** insert the conditional
 
 ```javascript
-    if t.name == TagCardholderName {
-		return format(TagCardholderName, t.value)
-	}
+if t.name == TagCardholderName {
+    return format(TagCardholderName, t.value)
+}
 ```
 
 ## Useful commands:
@@ -119,17 +118,17 @@ Insert in **loadTags()** methods
 
 * 2- Create a git tag with the version number
 ```sh
-    git tag -a v0.0.3 -m "my version 0.0.3"
+    git tag -a v0.0.4 -m "Added 9F15 tag"
 ```
 
 * 3- Push the tag to git repo
 ```sh
-    git push origin v0.0.3
+    git push origin v0.0.4
 ```
 
 * 4- Now the new version can be dowloaded to the other projects
 ```sh
-    go get -v "github.com/wagner-aos/emv-process"
+    go get -u -v "github.com/wagner-aos/emv-process"    
 ```
 
 
