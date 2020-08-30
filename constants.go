@@ -33,6 +33,7 @@ const (
 	TagApplicationVersionNumber         = "9F08"
 	TagTerminalApplicationVersionNumber = "9F09"
 	TagIssuerApplicationData            = "9F10"
+	TagMerchantCategoryCode             = "9F15"
 	TagTokenRequestorID                 = "9F19"
 	TagTerminalCountryCode              = "9F1A"
 	TagInterfaceDeviceSerialNumber      = "9F1E"
@@ -85,6 +86,7 @@ func loadTags() {
 	tagMap[TagApplicationVersionNumber] = tag{name: TagApplicationVersionNumber, minSize: 0, maxSize: 0}
 	tagMap[TagTerminalApplicationVersionNumber] = tag{name: TagTerminalApplicationVersionNumber, minSize: 0, maxSize: 0}
 	tagMap[TagIssuerApplicationData] = tag{name: TagIssuerApplicationData, minSize: 0, maxSize: 0}
+	tagMap[TagMerchantCategoryCode] = tag{name: TagMerchantCategoryCode, minSize: 0, maxSize: 0}
 	tagMap[TagTokenRequestorID] = tag{name: TagTokenRequestorID, minSize: 0, maxSize: 0}
 	tagMap[TagTerminalCountryCode] = tag{name: TagTerminalCountryCode, minSize: 0, maxSize: 0}
 	tagMap[TagInterfaceDeviceSerialNumber] = tag{name: TagInterfaceDeviceSerialNumber, minSize: 0, maxSize: 0}

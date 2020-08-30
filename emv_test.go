@@ -21,13 +21,14 @@ func TestEMV(t *testing.T) {
 
 			So(tag.GetName(), ShouldEqual, "5F20")
 			So(tag.GetValue(), ShouldEqual, "WAGNER ALVES")
+
 		})
 
 		Convey("Should build a emv tag list and add tag", func() {
 
 			emv := NewEMV().
 				AddTag("5F20", "WAGNER ALVES").
-				AddTag("9F0B", "WAGNER ALVES DE OLIVEIRA SILVA").
+				AddTag("9F15", "5311").
 				Build()
 
 			for _, t := range emv.GetEMV().items {
@@ -117,6 +118,7 @@ func TestEMVParser(t *testing.T) {
 			AddTag("9F03", "000000000000").
 			AddTag("5F2A", "0986").
 			AddTag("9F1A", "0076").
+			AddTag("9F15", "5311").
 			AddTag("9F35", "22").
 			AddTag("9F34", "410302").
 			AddTag("5F24", "220531").

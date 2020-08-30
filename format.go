@@ -91,6 +91,9 @@ func formatting(t tag) string {
 	if t.name == TagIssuerApplicationData {
 		return format(TagIssuerApplicationData, t.value)
 	}
+	if t.name == TagMerchantCategoryCode {
+		return format(TagMerchantCategoryCode, t.value)
+	}
 	if t.name == TagTokenRequestorID {
 		return format(TagTokenRequestorID, t.value)
 	}
@@ -125,5 +128,5 @@ func formatting(t tag) string {
 		return format(TagUnpredictableNumber, t.value)
 	}
 
-	return string("tag not found")
+	return fmt.Sprintf("*** TAG %s NOT FOUND ***", t.GetName())
 }

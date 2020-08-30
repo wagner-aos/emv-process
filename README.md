@@ -82,23 +82,52 @@ With this lib you can Encode and Decode EMV tags for handling in your code.
 
 [EMV Lab](https://emvlab.org/emvtags/all/)
 
+## Adding new EMV Tags to the project
+
+1. in the file **constants.go**
+
+Put a new constant
+```javascript
+    TagCardholderName = "5F20"
+```
+
+Insert in **loadTags()** methods
+```javascript
+    //load Emv tags available
+    func loadTags() {
+        tagMap[TagCardholderName] = tag{name: TagCardholderName, minSize: 0, maxSize: 0}
+
+    }    
+```
+
+2. in the file **format.go** insert the conditional
+
+```javascript
+    if t.name == TagCardholderName {
+		return format(TagCardholderName, t.value)
+	}
+```
 
 ## Useful commands:
 
 ###  Creating a version of this lib:
 
-* 1- Create a git tag with the version number
+* 1- Test all!
+```sh
+    go test ./... -v
+```
+
+* 2- Create a git tag with the version number
 ```sh
     git tag -a v0.0.3 -m "my version 0.0.3"
 ```
 
-* 2- Push the tag to git repo
+* 3- Push the tag to git repo
 ```sh
     git push origin v0.0.3
 ```
 
-* 3- Now the new version can be dowloaded to the other projects
-
+* 4- Now the new version can be dowloaded to the other projects
 ```sh
     go get -v "github.com/wagner-aos/emv-process"
 ```
