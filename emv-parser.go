@@ -1,7 +1,7 @@
 package emv
 
 import (
-	"fmt"
+	"github.com/kataras/golog"
 	"strconv"
 	"strings"
 )
@@ -14,11 +14,11 @@ func (t *Tags) Parse(payload string) {
 
 		if tagExists {
 			offset += len(tagFound.name) + 2 + tagFound.size*2
-			fmt.Printf("\n\tTag Name: %s", tagFound.name)
-			fmt.Printf("\n\tTag Value: %s", tagFound.value)
-			fmt.Printf("\n\tTag Size: %d", tagFound.size)
+			golog.Debugf("\n\tTag Name: %s", tagFound.name)
+			golog.Debugf("\n\tTag Value: %s", tagFound.value)
+			golog.Debugf("\n\tTag Size: %d", tagFound.size)
 
-			fmt.Printf("\n\n\tOffset: %d", offset)
+			golog.Debugf("\n\n\tOffset: %d", offset)
 
 			t.items[tagFound.name] = *tagFound
 		} else {
