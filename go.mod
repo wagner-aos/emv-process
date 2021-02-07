@@ -8,5 +8,5 @@ require (
 	github.com/kataras/golog v0.1.6
 	github.com/smartystreets/assertions v1.2.0 // indirect
 	github.com/smartystreets/goconvey v1.6.4
-	golang.org/x/sys v0.0.0-20210110051926-789bb1bd4061 // indirect
+	golang.org/x/sys v0.0.0-20210124154548-22da62e12c0c // indirect
 )

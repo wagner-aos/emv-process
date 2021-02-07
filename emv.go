@@ -47,3 +47,8 @@ func (t *Tags) ToTLV() string {
 	}
 	return s
 }
+
+// GetTags return list of tags emv
+func (t *Tags) GetTags() map[string]tag {
+	return t.items
+}
