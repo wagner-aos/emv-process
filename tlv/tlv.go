@@ -51,3 +51,8 @@ func (t *Tags) ToTLV() string {
 func formatting(t tag) string {
 	return fmt.Sprintf("*** TAG %s NOT FOUND ***", t.GetName())
 }
+
+// GetTags return list of tags emv
+func (t *Tags) GetTags() map[string]tag {
+	return t.items
+}
